@@ -25,10 +25,27 @@ load_dotenv()
 
 
 # 初始化智谱AI
+# 如何这里换成 ChatOpenAI 会报错？
+# 1. 确保你的环境中已经安装了 openai 库。
+# 2. 确保你的环境变量中包含 OPENAI_API_KEY=your_openai_api_key
+# 3. 确保你的代码中包含 import openai
+# 4. 确保你的代码中包含 openai.api_key = os.getenv("OPENAI_API_KEY")        
+# 5. 确保你的代码中包含 model_name="gpt-3.5-turbo"
+# 6. 确保你的代码中包含 temperature=0.7
+# 7. 确保你的代码中包含 api_key=os.getenv("OPENAI_API_KEY") 
 llm = ChatZhipuAI(
     model_name="glm-4",  # 或 "glm-3-turbo"
     temperature=0.7,
-    api_key=os.getenv("ZHIPU_API_KEY")
+    # 确保你的 .env 文件中包含 ZHIPU_API_KEY=your_zhipu_api_key
+    # 为什么要使用 os.getenv("ZHIPU_API_KEY") 而不是直接使用 "your_zhipu_api_key"？
+    # 1. 安全性：使用 os.getenv("ZHIPU_API_KEY") 可以确保敏感信息（如 API 密钥）不会暴露在代码中。 
+    # 2. 可维护性：使用 os.getenv("ZHIPU_API_KEY") 可以将敏感信息从代码中分离出来，使代码更易于维护和更新。
+    # 3. 可扩展性：使用 os.getenv("ZHIPU_API_KEY") 可以轻松地在不同环境中切换 API 密钥，而无需修改代码。
+    # 4. 环境隔离：不同的环境（如开发、测试、生产）可以使用不同的环境变量。
+    # 5. 版本控制：.env 文件可以安全地添加到版本控制中，避免将敏感信息暴露在代码库中。
+    # 6. 跨平台：可以在不同的操作系统上使用相同的环境变量配置。
+    # 7. 简化部署：部署时只需提供.env 文件，而无需手动设置环境变量。
+    api_key=os.getenv("ZHIPU_API_KEY") 
 )
 
 # 创建一个简单的提示模板
