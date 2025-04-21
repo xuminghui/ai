@@ -1,7 +1,8 @@
-from langchain_community.chat_models.zhipuai import ChatZhipuAI
+# from langchain_community.chat_models.zhipuai import ChatZhipuAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough, Runnable
+from langchain_zhipuai.chat_models import ChatZhipuAI
 from dotenv import load_dotenv
 import os
 
@@ -53,6 +54,18 @@ prompt = ChatPromptTemplate.from_template("你好，{name}！欢迎来到 LangCh
 
 # 创建链
 chain = (
+    # 这里为什么要使用 RunnablePassthrough()？ 
+    # 1. 传递输入：RunnablePassthrough() 可以将输入直接传递给链的下一个部分，而不需要额外的处理。
+    # 2. 简化代码：使用 RunnablePassthrough() 可以简化代码，减少不必要的处理。
+    # 3. 可扩展性：使用 RunnablePassthrough() 可以轻松地扩展链的功能。
+    #如果没有 RunnablePassthrough()，那么链的输入就必须是一个字典，其中包含 name 键。
+    #例如 chain.invoke({"name": "小明"})
+    #这样做的好处是可以方便地扩展链的功能，例如添加其他参数。
+    #例如 chain.invoke({"name": "小明", "prefix": "亲爱的"})
+    #这样做的坏处是代码不够简洁，不够直观。
+    # 如果没有 RunnablePassthrough()，需要这样调用
+    #chain.invoke({"name": "小明"})
+    # 使用 RunnablePassthrough() 后，可以这样调用chain.invoke("小明")
     {"name": RunnablePassthrough()} 
     | prompt 
     | llm 

@@ -1,6 +1,11 @@
-langchain>=0.1.12
-langchain-community>=0.3.0
-langchain-core>=0.3.0
-langchain-zhipuai>=0.1.0
-python-dotenv==1.0.1
-zhipuai==1.0.7
+# 核心依赖
+langchain==0.3.23
+
+# 社区扩展
+langchain-community>=0.3.21
+langchain-zhipuai==0.0.1
+zhipuai==2.1.5.20250415
+# 工具类依赖
+faiss-cpu==1.10.0
+python-dotenv==1.1.0
+beautifulsoup4>=4.12.0
