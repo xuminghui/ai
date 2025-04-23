@@ -33,9 +33,7 @@ if __name__ == "__main__":
     try:
         # 示例提交（可修改参数测试）
         result = tool._run(
-            commit_message="测试提交",
-            remote_url="https://github.com/yourusername/yourrepo.git"
-        )
+            commit_message="测试提交"        )
         print("执行结果:", result)
     except Exception as e:
         print("验证失败:", str(e))
