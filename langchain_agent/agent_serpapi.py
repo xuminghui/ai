@@ -1,3 +1,7 @@
+#注意在安装google-search-results包时，遇到了一个问题：提示需要pip install google-search-results
+#但我已经安装了这个包，但是还是提示需要pip install google-search-results
+#最后我pip uninstall google-search-results，然后再pip install google-search-results就可以了,原因是google-search-results包的版本问题
+
 from dotenv import load_dotenv
 from langchain.agents import initialize_agent
 from langchain_openai import ChatOpenAI
