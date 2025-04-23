@@ -9,10 +9,14 @@ from langchain_openai import ChatOpenAI
 # 和 from langchain_community.agent_toolkits.load_tools import load_tools 
 # 的变更是在 LangChain 的 0.0.200 版本中引入的。这个变更是为了将社区贡献的工具和功能模块化，并移入独立的 langchain_community 模块中，以更好地组织代码。
 from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain_community.utilities import SerpAPIWrapper
+from langchain_core.tools import Tool
+from langchain_community.utilities import SerpAPIWrapper
+
+
+
 import os
-
 load_dotenv()
-
 # 初始化 ZhipuAI LLM
 llm = ChatOpenAI(
     temperature=0.1,
@@ -31,7 +35,31 @@ llm = ChatOpenAI(
 # 3. 可扩展性：可以轻松地在不同环境中切换 API 密钥，而无需修改代码。
 # 4. 环境隔离：不同的环境（如开发、测试、生产）可以使用不同的环境变量。
 # 5. 版本控制：.env 文件可以安全地添加到版本控制中，避免将敏感信息暴露在代码库中。
-tools = load_tools(["serpapi"])  # 直接加载已配置的SerpAPI工具
+#tools = load_tools(["serpapi"])  # 直接加载已配置的SerpAPI工具
+
+# You can create the tool to pass to an agent
+params = {
+    "engine": "google", # or bing
+    "gl": "us",
+    "hl": "en",
+}
+search = SerpAPIWrapper(params=params)
+# 修改工具初始化部分（第43-51行）
+# 原错误代码：
+# tools = Tool(
+#     name="web search",
+#     description="Search the web for information",
+#     func=search.run,
+# )
+
+# 正确写法：
+tools = [
+    Tool(
+        name="web_search",
+        func=search.run,
+        description="用于搜索网络信息的工具"
+    )
+]
 
 # 初始化 Agent
 agent = initialize_agent(
@@ -40,11 +68,15 @@ agent = initialize_agent(
     agent="zero-shot-react-description",
     verbose=True,
     handle_parsing_errors=True)
-    #通过增加容错能力，
-    # 使得 AgentExecutor 能够更好地处理 LLM 输出和工具调用中的问题，
-    # 从而提高代码的健壮性和执行成功率
+
+# 新增代码：打印提示词模板
+print("=== ReAct提示词模板 ===")
+print(agent.agent.llm_chain.prompt.template)
+print(agent.agent.llm_chain.prompt.input_variables)
+print("======================")
 
 # 用户提问
-query = "神舟二十号任务是哪一天完成发射前最后一次全区合练？"
-result = agent.run(query)
+query = "今天北京朝阳区天气如何？"
+
+result = agent.invoke(query)
 print(f"SerpAPI Result: {result}")
