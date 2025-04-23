@@ -19,6 +19,7 @@ class GitCommitTool(BaseTool):
             subprocess.run(["git", "add", "."], check=True)
             subprocess.run(["git", "commit", "-m", commit_message], check=True)
             
+            #查看git remote url的 命令
             if remote_url:
                 subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
             
