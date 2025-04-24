@@ -2,7 +2,7 @@
 from langchain_community.utilities import SerpAPIWrapper
 
 params = {
-    "engine": "google",
+    "engine": "google", # or bing
     "gl": "us",
     "hl": "en",
 }
