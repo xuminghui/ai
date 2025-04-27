@@ -8,6 +8,7 @@ class GitCommitSchema(BaseModel):
     commit_message: str = Field(..., description="提交信息")
     remote_url: Optional[str] = Field(default=None, description="Git远程仓库地址，默认为当前配置的origin")
 
+
 class GitCommitTool(BaseTool):
     name: str = "git_commit"  # 添加类型注解
     description: str = "将当前项目目录下的所有修改提交到Git仓库并推送到远程"  # 添加类型注解
