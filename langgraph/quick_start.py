@@ -1,7 +1,12 @@
 #https://langchain-ai.github.io/langgraph/tutorials/introduction/
 from csv import DictReader
+from typing import TypedDict
 from langgraph.graph import START,END
 from langgraph.graph import StateGraph
+
+class State(TypedDict):
+    ingredients:str
+    ret:str
 def supermarket(state):
     return {"ingredients":state["ingredients"],"ret":"{}买到了".format(state["ingredients"])}
 
@@ -18,7 +23,7 @@ if __name__ == "__main__":
     #参考源码：type[Any] 表示接受任何类型的类对象（如 dict 本身，而不是 dict 的实例）
     #- *, 星号后的参数必须通过关键字方式传递（keyword-only arguments）
     # 这是Python 3的特性，强制调用者显式指定参数名
-    sg=StateGraph(dict)   #python中dict是一个内置类型，不需要导入，直接使用。
+    sg=StateGraph(State)   #python中dict是一个内置类型，不需要导入，直接使用。
     #节点
     #(method) def add_node(
     #node: str,
