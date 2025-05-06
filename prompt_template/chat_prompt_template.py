@@ -12,6 +12,7 @@ llm = ChatOpenAI(
     max_retries=2,  # 显式设置重试次数
     metadata={"response_format": {"type": "json_object"}}
 )
+llm.bind()
 chatPromptTemplate=ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant."),
     ("user", "{input}")

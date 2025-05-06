@@ -15,3 +15,8 @@ my_dict = {"name": "Tom", "age": 25}
 print(my_dict["name"])  # 输出：Tom
 
 
+#PromptTemplate.from_template()这个类似java的静态方法，不需要实例化，直接调用。 
+#这个在python中是怎么实现的？
+
+
+

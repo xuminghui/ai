@@ -22,6 +22,7 @@ memory.save_context({"input": "你好吗"}, {"output": "我很好"})
 """
 """
 为什么入参是一个"{}"？如果下面的入参包含了参数，请给出示例：
-
+在ConversationBufferWindowMemory这个类中，入参的input字典是否非空，
+都不影响方法调用的结果。方法并没有对入参进行任何处理。
 """
-print(memory.load_memory_variables({"input": "abc"}))
+print(memory.load_memory_variables({}))
