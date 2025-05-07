@@ -10,7 +10,6 @@ class Person(BaseModel):
   job: str = Field(..., description="职业")
   age: int = Field(..., description="年龄")
   married: bool = Field(..., description="是否结婚")
-  #兴趣爱好
   hobby: str = Field(..., description="兴趣爱好")
 class Persons(BaseModel):
     persons: list[Person] = Field(..., description="Multiple person")   
